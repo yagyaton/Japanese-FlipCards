@@ -18,7 +18,7 @@ window.minsize(1100,720)
 
 #--------------------------------------------READING FROM CSV FILE---------------------------------------------#
 #Reading from the csv file and making a data frame
-jv=pandas.read_csv("./Japanese Vocab/Japanesevocab.csv")
+jv=pandas.read_csv("Japanesevocab.csv")
 # print(jv)
 #Setting up the database list for the words
 jwords=list(jv.Furigana)
@@ -92,22 +92,22 @@ def rightnext():
     #---------------------------------Copying learnt Word to a different CSV File--------------------#
     writehead=False
     try:
-        if os.stat("./Learnt Words/Learnt Japanese Words.csv").st_size == 0:
+        if os.stat("Learnt Japanese Words.csv").st_size == 0:
             writehead=True
         else:
             writehead=False
     except FileNotFoundError:
         writehead=True
-        with open("./Learnt Words/Learnt Japanese Words.csv", "w") as fh:
+        with open("Learnt Japanese Words.csv", "w") as fh:
             pass
     finally: 
-        jv[jv.Furigana==currentword].to_csv("./Learnt Words/Learnt Japanese Words.csv", mode='a', header=writehead, index=False)
+        jv[jv.Furigana==currentword].to_csv("Learnt Japanese Words.csv", mode='a', header=writehead, index=False)
     #---------------------------------------------------------------------------------------------------#
     
     jwords.remove(jv.loc[x].at["Furigana"])
     #----------------------------Rewriting csv file with deleted row in data frame----------------------#
     jv = jv.drop(jv.index[x-1]) #Index (x-1) because earlier it was counting header as a row and deleting wrong element
-    jv.to_csv("./Japanese Vocab/Japanesevocab.csv", index=False)
+    jv.to_csv("Japanesevocab.csv", index=False)
     #---------------------------------------------------------------------------------------------------#
     print(len(jwords))
     nextcard()
@@ -120,8 +120,8 @@ def wrongnext():
 
 
 #------------------------------------------Setting up the buttons-------------------------------------------------#
-rightimage=PhotoImage(file="./images/right.png")
-wrongimage=PhotoImage(file="./images/wrong.png")
+rightimage=PhotoImage(file="right.png")
+wrongimage=PhotoImage(file="wrong.png")
 
 dontknow=Button(image=wrongimage,bg="dark turquoise", padx=50, pady=50, highlightthickness=0, command=wrongnext)
 dontknow.grid(row=1, column=0, sticky="w")
